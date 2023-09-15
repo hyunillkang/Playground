@@ -46,15 +46,19 @@ def preprocess(filename):
             lines.pop(0)
 
         aroma_different_line = False
+        aroma = []
 
         if(not str(lines[0]).startswith("Aroma")):
             lines.pop(0)
-
-        aroma = lines.pop(0).split(" ")
-        aroma = [item.rstrip(",") for item in aroma]
-        if(aroma_different_line is False):
-            aroma.pop(0)
-        aromaSet.update(aroma)
+        else:
+            if(lines[0] == "Aroma"):
+                lines.pop(0)
+            else:
+                aroma = lines.pop(0).split(" ")
+                aroma = [item.rstrip(",") for item in aroma]
+                if(aroma_different_line is False):
+                    aroma.pop(0)
+                aromaSet.update(aroma)
 
         if(not str(lines[0]).startswith("Taste")):
             lines.pop(0)
@@ -130,7 +134,8 @@ def preprocess(filename):
     print("Creating object...")
     for i in range(0, len(data)):
         lines = data[i]
-
+        print(lines)
+        
         nameEng = lines.pop(0)
         nameKor = lines.pop(0)
         price = lines.pop(0)
@@ -140,7 +145,6 @@ def preprocess(filename):
         
         
         aroma, taste, finish = handle_tasting_notes(lines)
-        print(lines)
 
         type = lines.pop(0)
 
