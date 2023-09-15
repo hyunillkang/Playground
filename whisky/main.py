@@ -8,7 +8,7 @@ tasteSet = set()
 finishSet = set()
 
 class Whisky:
-    def __init__(self, id, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, description):
+    def __init__(self, id, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, description, country):
         self.id = id
         self.nameEng = nameEng
         self.nameKor = nameKor
@@ -20,6 +20,7 @@ class Whisky:
         self.capacity = capacity
         self.alcohol = alcohol
         self.description = description
+        self.country = country
 
     def __str__(self):
         return "nameEng: " + self.nameEng + "\n" + \
@@ -46,10 +47,7 @@ def preprocess(filename):
 
         aroma_different_line = False
 
-        if(lines[0] == "Aroma"):
-            aroma_different_line = True
-            lines.pop(0)
-        elif(not str(lines[0]).startswith("Aroma")):
+        if(not str(lines[0]).startswith("Aroma")):
             lines.pop(0)
 
         aroma = lines.pop(0).split(" ")
@@ -88,8 +86,8 @@ def preprocess(filename):
 
     temp = []
     filter_flag = False
-    filter_keywords = set(["국가", "지역", "케이스", "Information", ""])
-    keywords = set(["종류", "도수", "용량"])
+    filter_keywords = set(["지역", "케이스", "Information", ""])
+    keywords = set(["국가", "종류", "도수", "용량"])
 
     index_arr = []
 
@@ -133,7 +131,6 @@ def preprocess(filename):
     for i in range(0, len(data)):
         lines = data[i]
 
-        print(lines)
         nameEng = lines.pop(0)
         nameKor = lines.pop(0)
         price = lines.pop(0)
@@ -143,6 +140,7 @@ def preprocess(filename):
         
         
         aroma, taste, finish = handle_tasting_notes(lines)
+        print(lines)
 
         type = lines.pop(0)
 
@@ -156,11 +154,14 @@ def preprocess(filename):
 
         del lines[0:2]
 
+
+        country = lines.pop(0)
+
         description = ""        
         if(len(lines) != 0 and lines[0] != ""):
             description = " ".join(lines)
 
-        whisky = Whisky(i, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, description)
+        whisky = Whisky(i, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, description, country)
 
         result.append(whisky)
 
@@ -213,5 +214,5 @@ filename = sys.argv[1]
 filename = os.path.basename(filename)
 
 data = preprocess(filename)
-main(data)
+#main(data)
 
