@@ -8,7 +8,7 @@ tasteSet = set()
 finishSet = set()
 
 class Whisky:
-    def __init__(self, id, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, description, country):
+    def __init__(self, id, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, country, description):
         self.id = id
         self.nameEng = nameEng
         self.nameKor = nameKor
@@ -19,8 +19,8 @@ class Whisky:
         self.type = type
         self.capacity = capacity
         self.alcohol = alcohol
-        self.description = description
         self.country = country
+        self.description = description
 
     def __str__(self):
         return "nameEng: " + self.nameEng + "\n" + \
@@ -161,7 +161,7 @@ def preprocess(filename):
         if(len(lines) != 0 and lines[0] != ""):
             description = " ".join(lines)
 
-        whisky = Whisky(i, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, description, country)
+        whisky = Whisky(i, nameEng, nameKor, price, aroma, taste, finish, type, capacity, alcohol, country, description)
 
         result.append(whisky)
 
@@ -214,5 +214,5 @@ filename = sys.argv[1]
 filename = os.path.basename(filename)
 
 data = preprocess(filename)
-#main(data)
+main(data)
 
