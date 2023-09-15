@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 woody_set = set([
     '수지', '시가박스', '백단향', '생강', '백후추', '흑후추', '육두구', '넛맥',
@@ -49,7 +50,7 @@ sulphur_set = set([
     '고무', '연필 고무', '지우개', '새 타이어', '불에 탄 고무',
     '모래', '각 세탁한 세탁물', '전분', '린넨', '모래사장', '유황'])
 # main ---------------------------------------------------------------------------------------------------------------------------------------
-opnFile = open('blended_malt.csv', 'r', encoding='utf-8')
+opnFile = open('blended_malt_test.csv', 'r', encoding='utf-8')
 rdr = csv.reader(opnFile)
 
 colArr = []
@@ -83,50 +84,29 @@ for idx, whisky in enumerate(whiskies):
 
     # 아로마 데이터 추가           
     for keyword in targetVal:
-        if keyword in woody_set:
+        if keyword in woody_set and "나무향" not in new_aroma:
             new_aroma.append("나무향")
-        elif keyword in feinty_set:
+        elif keyword in feinty_set and "잔류액향" not in new_aroma:
             new_aroma.append("잔류액향")
-        elif keyword in winey_set:
+        elif keyword in winey_set and "와인향" not in new_aroma:
             new_aroma.append("와인향")
-        elif keyword in peaty_set:
+        elif keyword in peaty_set and "피트향" not in new_aroma:
             new_aroma.append("피트향")
-        elif keyword in cereal_set:
+        elif keyword in cereal_set and "곡물향" not in new_aroma:
             new_aroma.append("곡물향")
-        elif keyword in floral_set:
+        elif keyword in floral_set and "꽃향기" not in new_aroma:
             new_aroma.append("꽃향기")
-        elif keyword in fruity_set:
+        elif keyword in fruity_set and "과일향" not in new_aroma:
             new_aroma.append("과일향")
-        elif keyword in sulphur_set:
+        elif keyword in sulphur_set and "유황" not in new_aroma:
             new_aroma.append("유황")
-        else:
-            new_aroma.append(keyword)
-    print(whisky[colArr.index('nameKor')], new_aroma)
+        # else:
+        #     new_aroma.append(keyword) 
+#    print(whisky[colArr.index('nameKor')], new_aroma)
+    whisky[colArr.index('aroma')] = new_aroma
     #print(whisky[colArr.index('nameKor')], list(set(new_aroma))) 중복제거
-    
-    def export_to_csv(df, name):
-    df.to_csv(name + ".csv", index=False, encoding='utf-8-sig')
-    print(f"{name} got created!")
+print(whiskies)
 
+df = pd.DataFrame(whiskies)
 
-
-def main(data):
-    print("Converting to DataFrame...")
-    df = pd.DataFrame([vars(s) for s in data])
-
-    aroma_df = process_subset(df["aroma"], aromaSet)
-    taste_df = process_subset(df["taste"], tasteSet)
-    finish_df = process_subset(df["finish"], finishSet)
-
-    name = re.search(r'(.+?)\.[^.]*$', filename).group(1)
-
-    if not os.path.exists(name):
-        os.makedirs(name)
-        
-    print("Exporting...")
-    export_to_csv(df, f"./{name}/{name}")
-
-    export_to_csv(aroma_df, f"./{name}/aroma_data")
-    export_to_csv(taste_df, f"./{name}/taste_data")
-    export_to_csv(finish_df, f"./{name}/finish_data")
-    
+df.to_csv("./outputs/whisky.csv", index=False, encoding='utf-8-sig')

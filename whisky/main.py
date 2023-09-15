@@ -182,7 +182,7 @@ def process_subset(data, columnSet):
     return df
     
 def export_to_csv(df, name):
-    df.to_csv(name + ".csv", index=False, encoding='utf-8-sig')
+    df.to_csv(f"{name}.csv" + ".csv", index=False, encoding='utf-8-sig')
     print(f"{name} got created!")
 
 
@@ -196,15 +196,15 @@ def main(data):
 
     name = re.search(r'(.+?)\.[^.]*$', filename).group(1)
 
-    if not os.path.exists(name):
+    if not os.path.exists(f'outputs/{name}'):
         os.makedirs(name)
         
     print("Exporting...")
-    export_to_csv(df, f"./{name}/{name}")
+    export_to_csv(df, f"./outputs/{name}/{name}")
 
-    export_to_csv(aroma_df, f"./{name}/aroma_data")
-    export_to_csv(taste_df, f"./{name}/taste_data")
-    export_to_csv(finish_df, f"./{name}/finish_data")
+    export_to_csv(aroma_df, f"./outputs/{name}/aroma_data")
+    export_to_csv(taste_df, f"./outputs/{name}/taste_data")
+    export_to_csv(finish_df, f"./outputs/{name}/finish_data")
 
 if(len(sys.argv) < 2):
     print("Please provide filename (e.g: \"python main.py ./whisky_data.txt\")")
