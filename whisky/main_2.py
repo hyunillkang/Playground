@@ -50,7 +50,7 @@ sulphur_set = set([
     '고무', '연필 고무', '지우개', '새 타이어', '불에 탄 고무',
     '모래', '각 세탁한 세탁물', '전분', '린넨', '모래사장', '유황'])
 # main ---------------------------------------------------------------------------------------------------------------------------------------
-opnFile = open('blended_malt_test.csv', 'r', encoding='utf-8')
+opnFile = open('blended_malt.csv', 'r', encoding='utf-8')
 rdr = csv.reader(opnFile)
 
 colArr = []
@@ -109,4 +109,4 @@ print(whiskies)
 
 df = pd.DataFrame(whiskies)
 
-df.to_csv("./outputs/whisky.csv", index=False, encoding='utf-8-sig')
+df.to_csv("./outputs/blended_malt_1.csv", index=False, encoding='utf-8-sig')
