@@ -183,7 +183,7 @@ def process_subset(data, columnSet):
     return df
     
 def export_to_csv(df, name):
-    df.to_csv(f"{name}.csv" + ".csv", index=False, encoding='utf-8-sig')
+    df.to_csv(f"{name}.csv", index=False, encoding='utf-8-sig')
     print(f"{name} got created!")
 
 
